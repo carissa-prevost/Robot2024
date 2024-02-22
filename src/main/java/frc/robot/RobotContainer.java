@@ -3,14 +3,33 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.autos.*;
-//import frc.robot.commands.*;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.auto.AutoBuilder;
+
+
 import frc.robot.commands.swerve.TeleopSwerve;
-import frc.robot.subsystems.*;
+import frc.robot.commands.trap.StopArm;
+import frc.robot.commands.turret.TeleopTurret;
+import frc.robot.commands.turret.movePitch;
+import frc.robot.commands.climber.JoystickClimberControl;
+import frc.robot.commands.intake.intakeCommand;
+import frc.robot.commands.intake.testIntake;
+import frc.robot.commands.shooter.setKicker;
+
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pitch;
+import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.TrapScore;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,9 +38,16 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    
+    /* Sendable Chooser */
+    private SendableChooser<Command> chooser = new SendableChooser<>();
+    
     /* Controllers */
     private final Joystick driveStick = new Joystick(0);
     private final Joystick rotateStick = new Joystick(1);
+    private final Joystick operatorStick = new Joystick(2);
+    
+    private final Joystick testStick = new Joystick(3);
 
     /* Drive Controls */
     private final int translationAxis = Joystick.AxisType.kX.value;
@@ -29,29 +55,101 @@ public class RobotContainer {
     private final int rotationAxis = Joystick.AxisType.kX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(rotateStick, 2);
-    private final JoystickButton robotCentric = new JoystickButton(driveStick, 4);
+
+    // Drive Stick
+    private final JoystickButton robotCentric = new JoystickButton(driveStick, 12);
+    private final JoystickButton kickerStart = new JoystickButton(driveStick, 1);
+   
+    // Rotate Stick
+    private final JoystickButton zeroGyroButton = new JoystickButton(rotateStick, 2);
+    private final JoystickButton robotWashButton = new JoystickButton(rotateStick, 5);
+
+    /* Operator Controls */
+    private static final int pitchAdjust = Joystick.AxisType.kY.value;
+    private static final int turretRotate = Joystick.AxisType.kX.value;
+    
+    /* Operator Buttons */
+    private final JoystickButton runIntake = new JoystickButton(operatorStick, 1);
+    private final JoystickButton startShooter = new JoystickButton(operatorStick, 3);
+    private final JoystickButton stopShooter = new JoystickButton(operatorStick, 4);
+
+    // private final JoystickButton alignLimelight = new JoystickButton(operatorStick, 4);
+
+    private final JoystickButton intake = new JoystickButton(operatorStick, 5);
+
+    /* Test Buttons */
+    
+    // private final JoystickButton setPosition = new JoystickButton(testStick, 3);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Shooter s_Shooter = new Shooter();
+    private final Turret s_Turret = new Turret();
+    private final Pitch s_Pitch = new Pitch();
     private final Limelight s_Limelight = new Limelight();
+    private final Intake s_Intake = new Intake();
+    private final Climber s_Climber = new Climber();
+    private final TrapScore s_TrapScore = new TrapScore();
+
+    // private final LimelightTurretPitch s_LLPitch = new LimelightTurretPitch();
+    // private final Testing s_test = new Testing();
     
-    /* Limelight Values */
-    private final double tX = s_Limelight.x();
-    private final double tY = s_Limelight.y();
-    private final double tA = s_Limelight.targetArea();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        
+        // chooser = AutoBuilder.buildAutoChooser();
+
+        // // Define Autos + Configure Sendable Chooser
+        // chooser.addOption("Deploy Test Auto", new PathPlannerAuto("deployTestAuto"));
+        // chooser.addOption("Test Auto", new PathPlannerAuto("testAuto"));
+        // chooser.addOption("Nothing", null);
+        // SmartDashboard.putData("AutoChooser", chooser);
+        // SmartDashboard.putNumber("SpeedLimit", 1);
+       
+        /* Set Default Commands */
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> -driveStick.getRawAxis(strafeAxis), 
+                () -> -driveStick.getRawAxis(strafeAxis),
                 () -> -driveStick.getRawAxis(translationAxis), 
                 () -> -rotateStick.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
         );
+
+       s_Turret.setDefaultCommand(
+           new TeleopTurret(
+            s_Turret,
+            () -> -operatorStick.getRawAxis(turretRotate)
+           )
+       );
+
+        s_Pitch.setDefaultCommand(
+           new movePitch(
+            s_Pitch,
+          //  () -> -operatorStick.getRawAxis(pitchAdjust)
+            () -> s_Limelight.getTX()
+           )
+       );
+
+        s_Climber.setDefaultCommand(
+            new JoystickClimberControl(
+             s_Climber,
+             () -> -testStick.getRawAxis(pitchAdjust)                
+            )
+
+        );
+
+        s_TrapScore.setDefaultCommand(
+           new StopArm(
+            s_TrapScore
+           )
+        );
+
+
+
 
         // Configure the button bindings
         configureButtonBindings();
@@ -64,8 +162,26 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        zeroGyroButton.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+
+        robotWashButton.onTrue(new InstantCommand(() -> s_Shooter.robotWash()));
+
+        kickerStart.whileTrue(new setKicker(s_Shooter));
+
+       
+
+        /* Operator Buttons */
+        
+
+        stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
+
+        runIntake.whileTrue(new testIntake(s_Intake));
+
+        intake.onTrue(new intakeCommand(s_Intake, s_Shooter));
+
+
     }
 
     /**
@@ -75,6 +191,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return new PathPlannerAuto("exampleAuto");
     }
 }

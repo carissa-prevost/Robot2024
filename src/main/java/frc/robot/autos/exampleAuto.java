@@ -46,8 +46,8 @@ public class exampleAuto extends SequentialCommandGroup {
                 exampleTrajectory,
                 s_Swerve::getPose,
                 Constants.Swerve.swerveKinematics,
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                new PIDController(0, 0, 0),
+                new PIDController(0, 0, 0),
                 thetaController,
                 s_Swerve::setModuleStates,
                 s_Swerve);

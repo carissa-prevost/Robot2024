@@ -4,28 +4,28 @@
 
 package frc.robot.commands.limelight;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Turret;
 
-public class moveToSetpoint extends Command {
+import frc.robot.Constants;
 
-  private final Swerve m_swerve;
-  private final Limelight m_limelight;
+public class alignAprilTag extends Command {
+  /** Creates a new alignAprilTag. */
 
-  private PIDController limelightController;
-  private double setpoint;
+  Limelight s_Limelight;
+  Turret s_Turret;
+  double x;
 
-  /** Creates a new moveToSetpoint. */
-  public moveToSetpoint(Swerve m_swerve, Limelight m_limelight) {
+  public alignAprilTag(Limelight m_Limelight, Turret m_Turret, double x) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_swerve = m_swerve;
-    this.m_limelight = m_limelight;
+    this.s_Limelight =  m_Limelight;
+    this.s_Turret =  m_Turret;
+    
+    addRequirements(m_Limelight, m_Turret);
 
-    addRequirements(m_swerve);
-    addRequirements(m_limelight);
+    this.x = s_Limelight.getTX();
+
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +34,11 @@ public class moveToSetpoint extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+
+  }
+
 
   // Called once the command ends or is interrupted.
   @Override
