@@ -7,15 +7,15 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class setKicker extends Command {
-  /** Creates a new setKicker. */
+public class StopKicker extends Command {
+  /** Creates a new StopKicker. */
 
   Shooter s_Shooter;
 
-  public setKicker(Shooter m_Shooter) {
+  public StopKicker() {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    this.s_Shooter = m_Shooter;
+    this.s_Shooter = s_Shooter;
 
   }
 
@@ -27,16 +27,13 @@ public class setKicker extends Command {
   @Override
   public void execute() {
 
-    s_Shooter.setKicker(1, 0.55);
+    s_Shooter.setKicker(0, 0);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-
-    s_Shooter.setKicker(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

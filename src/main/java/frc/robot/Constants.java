@@ -19,12 +19,45 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static double maxModuleSpeed;
 
+
+    public enum LimelightPositions{ // TODO: FIND LIMELIGHT POSITIONS
+
+        SPEAKER(0.0, 0.0, 0.0),
+        AMP(0.0, 0.0, 0.0);
+
+        private double TXposition;
+        private double TYposition;
+        private double TAposition;
+
+        private LimelightPositions(double tX, double tY, double tA){
+
+            this.TXposition = tX;
+            this.TYposition = tY;
+            this.TAposition = tA;
+
+        }
+
+        private double getTX() {
+            return TXposition;
+        }
+
+        private double getTY() {
+
+            return TYposition;
+        }
+
+        private double getTA(){
+
+            return TAposition;
+        }
+    }
+
     public static final class Limelight {
 
         /* Positions */
         public static final double crosshairPosition = 0;
 
-        /* AprilTag Positions */
+        
 
 
     }
@@ -93,7 +126,7 @@ public final class Constants {
 
         /* Motor IDs */
         public static final int intakeMotorID = 4;
-        public static final int armID = 0;
+        public static final int armID = 55;
 
         /* Positions */
         public static final double stowedPosition = 0;
@@ -116,7 +149,7 @@ public final class Constants {
 
         /* Motor IDs */
         public static final int rollerMotorID = 0;
-        public static final int armMotorID = 55;
+        public static final int armMotorID = 30; // 55
 
         /* Positions */
         public static final double tScorerDeployed = 0;

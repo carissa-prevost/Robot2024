@@ -22,10 +22,11 @@ public class TeleopShoot extends Command {
   
   // speed of the motor will always be 1
 
-  public TeleopShoot(Shooter m_Shooter, double rightSpeed, double leftSpeed, double kickerSpeed) {
+  public TeleopShoot(Shooter s_Shooter, double rightSpeed, double leftSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.s_Shooter = m_Shooter;
-    addRequirements(m_Shooter);
+    this.s_Shooter = s_Shooter;
+
+    addRequirements(s_Shooter);
 
   }
 
@@ -44,6 +45,21 @@ public class TeleopShoot extends Command {
       // sets the shooter speed 
       s_Shooter.setShooter(1, rightSpeed, leftSpeed);
 
+      // waits for the shooter to get up to full speed
+      new WaitCommand(0.75);
+
+      // checks to see if the kickers are up to full speed
+
+      if (rightSpeed == s_Shooter.getRightSpeed() && leftSpeed == s_Shooter.getLeftSpeed()){
+
+        new setKicker(s_Shooter);
+
+      } else {
+
+        new StopKicker();
+
+      }
+
     } else if (sensorValue == true){
 
       // stops the kicker + the shooter
@@ -58,7 +74,7 @@ public class TeleopShoot extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    s_Shooter.setShooter(0, 0, 0);
+    
     
   }
 

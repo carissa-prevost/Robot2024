@@ -55,15 +55,21 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public void moveArm(double speed){
+
+    jointMotor.set(speed);
+  }
+
   public void deployIntake(){
 
-    jointPID.setReference(Constants.Intake.deployedPosition, CANSparkMax.ControlType.kPosition);
+    jointMotor.set(0.5);
+    // jointPID.setReference(Constants.Intake.deployedPosition, CANSparkMax.ControlType.kPosition);
 
   }
 
   public void stowIntake(){
 
-    jointPID.setReference(Constants.Intake.stowedPosition, CANSparkMax.ControlType.kPosition);
+    jointMotor.set(-0.5);
 
   }
 

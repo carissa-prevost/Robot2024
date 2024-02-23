@@ -18,9 +18,11 @@ import frc.robot.commands.trap.StopArm;
 import frc.robot.commands.turret.TeleopTurret;
 import frc.robot.commands.turret.movePitch;
 import frc.robot.commands.climber.JoystickClimberControl;
+import frc.robot.commands.intake.MoveJoint;
 import frc.robot.commands.intake.intakeCommand;
 import frc.robot.commands.intake.testIntake;
 import frc.robot.commands.shooter.setKicker;
+import frc.robot.commands.shooter.TeleopShoot;
 
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Shooter;
@@ -69,13 +71,18 @@ public class RobotContainer {
     private static final int turretRotate = Joystick.AxisType.kX.value;
     
     /* Operator Buttons */
-    private final JoystickButton runIntake = new JoystickButton(operatorStick, 1);
+    private final JoystickButton runKicker = new JoystickButton(operatorStick, 1);
+    private final JoystickButton stopShooter = new JoystickButton(operatorStick, 2);
     private final JoystickButton startShooter = new JoystickButton(operatorStick, 3);
-    private final JoystickButton stopShooter = new JoystickButton(operatorStick, 4);
+
+    // private final JoystickButton trapScore = new JoystickButton(operatorStick, 6);
+    // private final JoystickButton deployTrapScore = new JoystickButton(operatorStick, 7);
+    // private final JoystickButton toggleClimberJoystickControl = new JoystickButton(operatorStick, 8); // will be a onTrue, then onFalse will stop climber control
+    
 
     // private final JoystickButton alignLimelight = new JoystickButton(operatorStick, 4);
 
-    private final JoystickButton intake = new JoystickButton(operatorStick, 5);
+    private final JoystickButton intake = new JoystickButton(testStick, 1);
 
     /* Test Buttons */
     
@@ -148,7 +155,12 @@ public class RobotContainer {
            )
         );
 
-
+        s_Intake.setDefaultCommand(
+            new MoveJoint(
+                s_Intake,
+                () -> testStick.getRawAxis(pitchAdjust)
+            )
+        );
 
 
         // Configure the button bindings
@@ -168,18 +180,15 @@ public class RobotContainer {
 
         robotWashButton.onTrue(new InstantCommand(() -> s_Shooter.robotWash()));
 
-        kickerStart.whileTrue(new setKicker(s_Shooter));
-
-       
-
         /* Operator Buttons */
         
+        startShooter.onTrue(new InstantCommand(() -> s_Shooter.setShooter(1, 0.8, 0.4)));
 
         stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
 
-        runIntake.whileTrue(new testIntake(s_Intake));
+        runKicker.whileTrue(new setKicker(s_Shooter));
 
-        intake.onTrue(new intakeCommand(s_Intake, s_Shooter));
+        intake.onTrue(new InstantCommand(() -> s_Intake.runIntake(1)));
 
 
     }

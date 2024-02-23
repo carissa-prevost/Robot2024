@@ -85,6 +85,18 @@ public class Shooter extends SubsystemBase {
 
   }
 
+  public double getRightSpeed(){
+
+    return rightShooter.get();
+
+  }
+
+  public double getLeftSpeed(){
+
+    return leftShooter.get();
+
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
