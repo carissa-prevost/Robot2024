@@ -38,21 +38,22 @@ public class Pitch extends SubsystemBase {
     
     // if the pitch is within the max + min positions, adjust the pitch. Otherwise stop the motor
   
-    double currentPitch = pitchEncoder.getPosition().getValueAsDouble();
+    pitchMotor.set(speed);
+    // double currentPitch = pitchEncoder.getPosition().getValueAsDouble();
    
-    if (currentPitch >= Constants.Pitch.minPitchPosition && speed > 0){
+    // if (currentPitch >= Constants.Pitch.minPitchPosition && speed > 0){
 
-      pitchMotor.set(speed);
+    //   pitchMotor.set(speed);
 
-    } else if (currentPitch <= Constants.Pitch.maxPitchPosition && speed < 0){
+    // } else if (currentPitch <= Constants.Pitch.maxPitchPosition && speed < 0){
 
-      pitchMotor.set(speed);
+    //   pitchMotor.set(speed);
 
-    } else { 
+    // } else { 
 
-      pitchMotor.set(0);
+    //   pitchMotor.set(0);
     
-    }
+    // }
 
   }
 
@@ -67,9 +68,9 @@ public class Pitch extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // double m_currentPosition = pitchEncoder.getPosition().getValueAsDouble();
+    double m_currentPosition = pitchEncoder.getPosition().getValueAsDouble();
 
-    // SmartDashboard.putNumber("Tilt Encoder Value", m_currentPosition);
+    SmartDashboard.putNumber("Tilt Encoder Value", m_currentPosition);
 
   }
 }

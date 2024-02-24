@@ -101,7 +101,14 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
+    double rightSpeed = rightShooter.get();
+    double leftSpeed = leftShooter.get();
+    double kickerSpeed = kicker.get();
+
     SmartDashboard.putBoolean("Sensor Value", getSensor());
+    SmartDashboard.putNumber("Right Shooter Speed", rightSpeed);
+    SmartDashboard.putNumber("Left Shooter Speed", leftSpeed);
+    SmartDashboard.putNumber("Kicker Speed", kickerSpeed);
 
   }
 }

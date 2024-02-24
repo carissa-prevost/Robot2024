@@ -40,19 +40,19 @@ public class TurretPitch extends SubsystemBase {
   
     double currentPitch = pitchEncoder.getPosition().getValueAsDouble();
    
-    if (currentPitch >= Constants.Pitch.minPitchPosition && speed > 0){
+    // if (currentPitch >= Constants.Pitch.minPitchPosition && speed > 0){
 
-      pitchMotor.set(speed);
+    //   pitchMotor.set(speed);
 
-    } else if (currentPitch <= Constants.Pitch.maxPitchPosition && speed < 0){
+    // } else if (currentPitch <= Constants.Pitch.maxPitchPosition && speed < 0){
 
-      pitchMotor.set(speed);
+    //   pitchMotor.set(speed);
 
-    } else { 
+    // } else { 
 
-      pitchMotor.set(0);
+    //   pitchMotor.set(0);
     
-    }
+    // }
 
   }
 

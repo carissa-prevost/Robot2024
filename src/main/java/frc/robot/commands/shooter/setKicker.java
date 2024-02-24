@@ -27,7 +27,16 @@ public class setKicker extends Command {
   @Override
   public void execute() {
 
-    s_Shooter.setKicker(1, 0.55);
+    boolean sensorValue = s_Shooter.getSensor();
+
+    // if (sensorValue == true){
+
+      s_Shooter.setKicker(1, 0.5);
+    
+    // } else if (sensorValue == false){
+
+    //   s_Shooter.setKicker(0, 0);
+    // }
 
   }
 

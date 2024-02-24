@@ -58,6 +58,7 @@ public class Intake extends SubsystemBase {
   public void moveArm(double speed){
 
     jointMotor.set(speed);
+    
   }
 
   public void deployIntake(){

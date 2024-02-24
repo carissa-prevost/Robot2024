@@ -71,9 +71,9 @@ public class RobotContainer {
     private static final int turretRotate = Joystick.AxisType.kX.value;
     
     /* Operator Buttons */
-    private final JoystickButton runKicker = new JoystickButton(operatorStick, 1);
-    private final JoystickButton stopShooter = new JoystickButton(operatorStick, 2);
-    private final JoystickButton startShooter = new JoystickButton(operatorStick, 3);
+    private final JoystickButton runKicker = new JoystickButton(operatorStick, 5); // 1
+    private final JoystickButton stopShooter = new JoystickButton(operatorStick, 6); // 2
+    private final JoystickButton startShooter = new JoystickButton(operatorStick, 7); // 3
 
     // private final JoystickButton trapScore = new JoystickButton(operatorStick, 6);
     // private final JoystickButton deployTrapScore = new JoystickButton(operatorStick, 7);
@@ -126,28 +126,27 @@ public class RobotContainer {
             )
         );
 
-       s_Turret.setDefaultCommand(
-           new TeleopTurret(
-            s_Turret,
-            () -> -operatorStick.getRawAxis(turretRotate)
-           )
-       );
+    //    s_Turret.setDefaultCommand(
+    //        new TeleopTurret(
+    //         s_Turret,
+    //         () -> -operatorStick.getRawAxis(turretRotate)
+    //        )
+    //    );
 
         s_Pitch.setDefaultCommand(
            new movePitch(
             s_Pitch,
-          //  () -> -operatorStick.getRawAxis(pitchAdjust)
-            () -> s_Limelight.getTX()
+           () -> -operatorStick.getRawAxis(pitchAdjust)
            )
        );
 
-        s_Climber.setDefaultCommand(
-            new JoystickClimberControl(
-             s_Climber,
-             () -> -testStick.getRawAxis(pitchAdjust)                
-            )
+        // s_Climber.setDefaultCommand(
+        //     new JoystickClimberControl(
+        //      s_Climber,
+        //      () -> -testStick.getRawAxis(pitchAdjust)                
+        //     )
 
-        );
+        // );
 
         s_TrapScore.setDefaultCommand(
            new StopArm(
@@ -182,7 +181,7 @@ public class RobotContainer {
 
         /* Operator Buttons */
         
-        startShooter.onTrue(new InstantCommand(() -> s_Shooter.setShooter(1, 0.8, 0.4)));
+        startShooter.onTrue(new InstantCommand(() -> s_Shooter.setShooter(1, 0.9, 0.6)));
 
         stopShooter.onTrue(new InstantCommand(() -> s_Shooter.stopShooter()));
 

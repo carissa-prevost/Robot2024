@@ -34,7 +34,7 @@ public class MoveJoint extends Command {
 
     double j_speed = speed.getAsDouble();
 
-    s_Intake.moveArm(j_speed);
+    s_Intake.moveArm(j_speed * 2);
 
   }
 
