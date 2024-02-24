@@ -140,13 +140,13 @@ public class RobotContainer {
            )
        );
 
-        // s_Climber.setDefaultCommand(
-        //     new JoystickClimberControl(
-        //      s_Climber,
-        //      () -> -testStick.getRawAxis(pitchAdjust)                
-        //     )
+        s_Climber.setDefaultCommand(
+            new JoystickClimberControl(
+             s_Climber,
+             () -> -testStick.getRawAxis(pitchAdjust)                
+            )
 
-        // );
+        );
 
         s_TrapScore.setDefaultCommand(
            new StopArm(
@@ -154,12 +154,12 @@ public class RobotContainer {
            )
         );
 
-        s_Intake.setDefaultCommand(
-            new MoveJoint(
-                s_Intake,
-                () -> testStick.getRawAxis(pitchAdjust)
-            )
-        );
+        // s_Intake.setDefaultCommand(
+        //     new MoveJoint(
+        //         s_Intake,
+        //         () -> testStick.getRawAxis(pitchAdjust)
+        //     )
+        //);
 
 
         // Configure the button bindings
